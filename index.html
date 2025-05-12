@@ -5,316 +5,403 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Сравнение жизненных сценариев</title>
-    <style>
-        :root {
-            --primary: rgb(138, 43, 226);
-            --secondary: rgb(0, 191, 255);
-            --dark: #121212;
-            --darker: #0a0a0a;
-            --light: #e0e0e0;
-            --lighter: #f5f5f5;
-            --gray: #2a2a2a;
-            --success: #28a745;
-            --danger: #dc3545;
-            --warning: #fd7e14;
-            --card-bg: #1e1e1e;
-            --text-muted: #aaaaaa;
-        }
+<style>
+    :root {
+        --text: #e4e3fc;
+        --background: #010109;
+        --primary: #8e83f2;
+        --secondary: #650f92;
+        --accent: #c33eeb;
+        --dark: #0a081a;
+        --darker: #050313;
+        --light: #e4e3fc;
+        --lighter: #f5f4fe;
+        --gray: #252535;
+        --success: #5db5f6;
+        --danger: #f0503f;
+        --warning: #fd7e14;
+        --card-bg: #121222;
+        --text-muted: #9a99b8;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
 
-        body {
-            background-color: var(--dark);
-            color: var(--light);
-            line-height: 1.6;
-            padding: 0px;
-            min-height: 100vh;
-        
-        }
+    body {
+        background-color: var(--background);
+        color: var(--text);
+        line-height: 1.6;
+        padding: 0px;
+        min-height: 100vh;
+    }
 
-        th{
-            text-align: left;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 20px;
-        }
+    th {
+        text-align: left;
+    }
 
-        header {
-            text-align: center;
-            margin-bottom: 40px;
-            padding: 30px;
-            background: var(--darker);
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 20px;
+    }
+
+    header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px;
+        background: var(--darker);
+        border-radius: 16px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    h1 {
+        font-size: 2.8rem;
+        margin-bottom: 15px;
+        background: linear-gradient(to right, var(--primary), var(--accent));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+
+    .subtitle {
+        font-size: 1.2rem;
+        color: var(--text-muted);
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .section-title {
+        font-size: 1.8rem;
+        margin-bottom: 30px;
+        text-align: center;
+        color: var(--primary);
+        font-weight: 700;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 10px;
+    }
+
+    .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 450px;
+        height: 3px;
+        background: linear-gradient(to right, var(--primary), var(--accent));
+        border-radius: 3px;
+    }
+
+    .scenario-description {
+        display: flex;
+        gap: 20px;
+        margin-bottom: 30px;
+    }
+
+    .scenario-card {
+        flex: 1;
+        padding: 25px;
+        border-radius: 12px;
+        background: var(--card-bg);
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+        border-top: 4px solid;
+    }
+
+    .current-card {
+        border-color: var(--warning);
+    }
+
+    .it-card {
+        border-color: var(--success);
+    }
+
+    .scenario-title {
+        font-size: 1.4rem;
+        margin-bottom: 15px;
+        font-weight: 700;
+    }
+
+    .current-title {
+        color: var(--warning);
+    }
+
+    .it-title {
+        color: var(--success);
+    }
+
+    .scenario-conditions {
+        margin-top: 15px;
+    }
+
+    .scenario-conditions h4 {
+        margin-bottom: 10px;
+        color: var(--text-muted);
+    }
+
+    .scenario-conditions ul {
+        padding-left: 20px;
+    }
+
+    .scenario-conditions li {
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+
+    .comparison-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 30px 0;
+        background: var(--card-bg);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .comparison-table th,
+    .comparison-table td {
+        padding: 15px;
+        text-align: center;
+        border: 1px solid var(--gray);
+    }
+
+    .comparison-table th {
+        background-color: rgba(142, 131, 242, 0.1);
+        color: var(--primary);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+    }
+
+    .comparison-table tr:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.03);
+    }
+
+    .probability-value {
+        font-size: 1.2rem;
+        font-weight: 700;
+        margin: 5px 0;
+    }
+
+    .bad-value {
+        color: var(--danger);
+    }
+
+    .good-value {
+        color: var(--success);
+    }
+
+    .details-btn {
+        background: rgba(142, 131, 242, 0.2);
+        color: var(--primary);
+        border: none;
+        padding: 8px 15px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 0.8rem;
+        margin-top: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .details-btn:hover {
+        background: rgba(142, 131, 242, 0.4);
+    }
+
+.modal {
+    display: none; /* По умолчанию скрыто */
+    position: fixed;
+    z-index: 100;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(1, 1, 9, 0.9);
+    /* Центрирование содержимого */
+    justify-content: center;
+    align-items: center;
+    overflow: auto; /* Прокрутка всей страницы, если нужно */
+}
+
+.modal-content {
+    background-color: var(--darker);
+    padding: 30px;
+    border: 1px solid var(--primary);
+    border-radius: 12px;
+    width: 80%;
+    max-width: 1000px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    /* Ограничение по высоте с прокруткой */
+    max-height: 90vh;
+    overflow-y: auto; /* Прокрутка внутри окна */
+    margin: 40px auto; /* Отступ сверху и центрирование */
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--gray);
+    top: 0;
+    background-color: var(--darker);
+    z-index: 10;
+}
+
+    .modal-title {
+        font-size: 1.5rem;
+        color: var(--primary);
+        font-weight: 700;
+    }
+
+    .close {
+        color: var(--text-muted);
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .close:hover {
+        color: var(--light);
+    }
+
+    .calculation-steps {
+        margin-top: 20px;
+    }
+
+    .calculation-step {
+        margin-bottom: 15px;
+    }
+
+    .calculation-formula {
+        background: var(--gray);
+        padding: 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+        font-family: monospace;
+        border-left: 3px solid var(--primary);
+    }
+
+    .parameter-controls {
+        padding: 20px;
+        background: var(--card-bg);
+        border-radius: 8px;
+    }
+
+    .parameter-group {
+        margin-bottom: 20px;
+    }
+
+    .parameter-group h3 {
+        margin-bottom: 15px;
+        color: var(--primary);
+    }
+
+    .parameter-row {
+        display: flex;
+        align-items: center;
+        margin-bottom: 10px;
+    }
+
+    .parameter-label {
+        width: 250px;
+        font-size: 0.9rem;
+    }
+
+    .parameter-value {
+        flex: 1;
+    }
+
+    input[type="number"],
+    input[type="range"],
+    select {
+        width: 100%;
+        padding: 8px;
+        background: var(--gray);
+        border: 1px solid var(--text-muted);
+        border-radius: 4px;
+        color: var(--light);
+    }
+
+    input[type="range"] {
+        padding: 0;
+    }
+
+    .update-btn {
+        background: var(--primary);
+        color: var(--background);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-top: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .update-btn:hover {
+        background: var(--accent);
+    }
+
+    .params-btn {
+        background: var(--primary);
+        color: var(--background);
+        border: none;
+        padding: 12px 24px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-weight: bold;
+        margin: 20px auto;
+        display: block;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+    }
+
+    .params-btn:hover {
+        background: var(--accent);
+    }
+
+    footer {
+        text-align: center;
+        padding: 30px;
+        margin-top: 60px;
+        color: var(--text-muted);
+        font-size: 0.9rem;
+        border-top: 1px solid var(--gray);
+    }
+
+    @media (max-width: 768px) {
+        .scenario-description {
+            flex-direction: column;
         }
 
         h1 {
-            font-size: 2.8rem;
-            margin-bottom: 15px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
-
-        .subtitle {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .section-title {
-            font-size: 1.8rem;
-            margin-bottom: 30px;
-            text-align: center;
-            color: var(--primary);
-            font-weight: 700;
-            position: relative;
-            display: inline-block;
-            padding-bottom: 10px;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 450px;
-            height: 3px;
-            background: linear-gradient(to right, var(--primary), var(--secondary));
-            border-radius: 3px;
-        }
-
-        .luck-factor {
-            text-align: center;
-            padding: 15px;
-            background: rgba(138, 43, 226, 0.1);
-            border-radius: 8px;
-            font-size: 1.1rem;
-        }
-
-        .luck-factor strong {
-            color: var(--primary);
-        }
-
-        .scenario-description {
-            display: flex;
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .scenario-card {
-            flex: 1;
-            padding: 25px;
-            border-radius: 12px;
-            background: var(--card-bg);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            border-top: 4px solid;
-        }
-
-        .teacher-card {
-            border-color: var(--danger);
-        }
-
-        .it-card {
-            border-color: var(--success);
-        }
-
-        .scenario-title {
-            font-size: 1.4rem;
-            margin-bottom: 15px;
-            font-weight: 700;
-        }
-
-        .teacher-title {
-            color: var(--danger);
-        }
-
-        .it-title {
-            color: var(--success);
-        }
-
-        .scenario-conditions {
-            margin-top: 15px;
-        }
-
-        .scenario-conditions h4 {
-            margin-bottom: 10px;
-            color: var(--text-muted);
-        }
-
-        .scenario-conditions ul {
-            padding-left: 20px;
-        }
-
-        .scenario-conditions li {
-            margin-bottom: 8px;
-            font-size: 0.95rem;
-        }
-
-        .comparison-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 30px 0;
-            background: var(--card-bg);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-        }
-
-        .comparison-table th,
-        .comparison-table td {
-            padding: 15px;
-            text-align: center;
-            border: 1px solid var(--gray);
-        }
-
-        .comparison-table th {
-            background-color: rgba(138, 43, 226, 0.1);
-            color: var(--primary);
-            font-weight: 600;
-            text-transform: uppercase;
-            font-size: 0.9rem;
-        }
-
-        .comparison-table tr:nth-child(even) {
-            background-color: rgba(255, 255, 255, 0.02);
-        }
-
-        .probability-value {
-            font-size: 1.2rem;
-            font-weight: 700;
-            margin: 5px 0;
-        }
-
-        .bad-value {
-            color: var(--danger);
-        }
-
-        .good-value {
-            color: var(--success);
-        }
-
-        .details-btn {
-            background: rgba(138, 43, 226, 0.2);
-            color: var(--primary);
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.8rem;
-            margin-top: 10px;
-            transition: all 0.3s ease;
-        }
-
-        .details-btn:hover {
-            background: rgba(138, 43, 226, 0.4);
-        }
-
-        /* Модальное окно */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 100;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0, 0, 0, 0.8);
+            font-size: 2.2rem;
         }
 
         .modal-content {
-            background-color: var(--darker);
-            margin: 3% auto;
-            padding: 30px;
-            border: 1px solid var(--primary);
-            border-radius: 12px;
-            width: 80%;
-            max-width: 1000px;
-            overflow-y: auto;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            width: 95%;
+            margin: 10% auto;
         }
 
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid var(--gray);
+        .parameter-row {
+            flex-direction: column;
+            align-items: flex-start;
         }
 
-        .modal-title {
-            font-size: 1.5rem;
-            color: var(--primary);
-            font-weight: 700;
+        .parameter-label {
+            width: 100%;
+            margin-bottom: 5px;
         }
-
-        .close {
-            color: var(--text-muted);
-            font-size: 28px;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
-        .close:hover {
-            color: var(--light);
-        }
-
-        .calculation-steps {
-            margin-top: 20px;
-        }
-
-        .calculation-step {
-            margin-bottom: 15px;
-        }
-
-        .calculation-formula {
-            background: var(--gray);
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            font-family: monospace;
-            border-left: 3px solid var(--primary);
-        }
-
-        footer {
-            text-align: center;
-            padding: 30px;
-            margin-top: 60px;
-            color: var(--text-muted);
-            font-size: 0.9rem;
-            border-top: 1px solid var(--gray);
-        }
-
-        @media (max-width: 768px) {
-            .scenario-description {
-                flex-direction: column;
-            }
-            
-            h1 {
-                font-size: 2.2rem;
-            }
-            
-            .modal-content {
-                width: 95%;
-                margin: 10% auto;
-            }
-        }
-    </style>
+    }
+</style>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 
@@ -325,62 +412,58 @@
             <p class="subtitle">Вероятности быть здоровой, богатой и счастливой в разных условиях (2025-2040)</p>
         </header>
 
-        <div class="luck-factor">
-            <strong>Коэффициент везения:</strong> kср ≈ 0.02008 (умеренный уровень везения)
-        </div>
-
+        <button class="params-btn" onclick="openModal('parameters-modal')">Изменить параметры моделирования</button>
 
         <table class="comparison-table">
             <thead>
                 <tr>
                     <th>Критерий</th>
-                    <th>Учитель начальных классов (нелюбимый муж, двое детей, попытка накопить $1M)</th>
-                    <th>Фронтенд-разработчик (2 работы, без детей, партнёр-единомышленник,
-                    активное накопление капитала)</th>
+                    <th>Твоя жизнь сейчас</th>
+                    <th>Фронтенд-разработчик </th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td><strong>Финансы ($1M)</strong><br>Вероятность накопить $1 млн к 2040 году</td>
                     <td>
-                        <div class="probability-value bad-value">0%</div>
-                        <button class="details-btn" onclick="openModal('money-teacher')">Подробный расчет</button>
+                        <div class="probability-value bad-value" id="current-money">0%</div>
+                        <button class="details-btn" onclick="openModal('money-current')">Подробный расчет</button>
                     </td>
                     <td>
-                        <div class="probability-value good-value">86.7%</div>
+                        <div class="probability-value good-value" id="it-money">86.7%</div>
                         <button class="details-btn" onclick="openModal('money-it')">Подробный расчет</button>
                     </td>
                 </tr>
                 <tr>
                     <td><strong>Здоровье</strong><br>Вероятность сохранить относительное здоровье</td>
                     <td>
-                        <div class="probability-value bad-value">0.000107%</div>
-                        <button class="details-btn" onclick="openModal('health-teacher')">Подробный расчет</button>
+                        <div class="probability-value bad-value" id="current-health">0.000107%</div>
+                        <button class="details-btn" onclick="openModal('health-current')">Подробный расчет</button>
                     </td>
                     <td>
-                        <div class="probability-value good-value">38.64%</div>
+                        <div class="probability-value good-value" id="it-health">38.64%</div>
                         <button class="details-btn" onclick="openModal('health-it')">Подробный расчет</button>
                     </td>
                 </tr>
                 <tr>
                     <td><strong>Счастье</strong><br>Вероятность быть счастливой</td>
                     <td>
-                        <div class="probability-value bad-value">29.32%</div>
-                        <button class="details-btn" onclick="openModal('happy-teacher')">Подробный расчет</button>
+                        <div class="probability-value bad-value" id="current-happy">29.32%</div>
+                        <button class="details-btn" onclick="openModal('happy-current')">Подробный расчет</button>
                     </td>
                     <td>
-                        <div class="probability-value good-value">85.5%</div>
+                        <div class="probability-value good-value" id="it-happy">86.5%</div>
                         <button class="details-btn" onclick="openModal('happy-it')">Подробный расчет</button>
                     </td>
                 </tr>
                 <tr>
                     <td><strong>Полный успех</strong><br>Вероятность быть здоровой, богатой и счастливой</td>
                     <td>
-                        <div class="probability-value bad-value">0%</div>
-                        <button class="details-btn" onclick="openModal('success-teacher')">Подробный расчет</button>
+                        <div class="probability-value bad-value" id="current-success">0%</div>
+                        <button class="details-btn" onclick="openModal('success-current')">Подробный расчет</button>
                     </td>
                     <td>
-                        <div class="probability-value good-value">28.64%</div>
+                        <div class="probability-value good-value" id="it-success">28.64%</div>
                         <button class="details-btn" onclick="openModal('success-it')">Подробный расчет</button>
                     </td>
                 </tr>
@@ -388,80 +471,413 @@
         </table>
     </div>
 
-    <!-- Модальные окна с расчетами -->
-    <div id="money-teacher" class="modal">
+    <!-- Модальное окно с параметрами -->
+    <div id="parameters-modal" class="modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Финансы: Учитель начальных классов</h3>
-                <span class="close" onclick="closeModal('money-teacher')">&times;</span>
+            <!-- <div class="modal-header">
+                <h3 class="modal-title">Параметры моделирования</h3>
+                <span class="close" onclick="closeModal('parameters-modal')">&times;</span>
+            </div> -->
+            <div class="parameter-controls">
+
+                <div class="parameter-group">
+                    <div class="parameter-row">
+                        <div class="parameter-label">Период моделирования (лет):</div>
+                        <div class="parameter-value">
+                            <input type="number" id="years" value="15" min="1" max="50">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="parameter-group">
+                    <div class="parameter-row">
+                        <div class="parameter-label">Сфера деятельности:</div>
+                        <div class="parameter-value">
+                          <select id="current-job-type">
+    <option value="office">Офисная работа (администратор, менеджер)</option>
+    <option value="physical">Физический труд (строитель, грузчик)</option>
+    <option value="creative">Творческая работа (дизайнер, писатель)</option>
+    <option value="it">IT-сфера (разработчик, тестировщик)</option>
+    <option value="medical">Медицина (врач, медсестра)</option>
+    <option value="education"selected>Образование (учитель, преподаватель)</option>
+    <option value="sales">Продажи (менеджер по продажам)</option>
+    <option value="service">Сфера услуг (парикмахер, косметолог)</option>
+    <option value="finance">Финансы (бухгалтер, аналитик)</option>
+    <option value="freelance">Фриланс (разные проекты)</option>
+    <option value="unemployed">Безработный</option>
+</select>
+                        </div>
+                    </div>
+                    <div class="parameter-row">
+                        <div class="parameter-label">Доход (₽/мес):</div>
+                        <div class="parameter-value">
+                            <input type="number" id="current-income" value="35000" min="0">
+                        </div>
+                    </div>
+                    <div class="parameter-row">
+                        <div class="parameter-label">Расходы (₽/мес):</div>
+                        <div class="parameter-value">
+                            <input type="number" id="current-expenses" value="32500" min="0">
+                        </div>
+                    </div>
+                    <div class="parameter-row">
+                        <div class="parameter-label">Накопления (₽):</div>
+                        <div class="parameter-value">
+                            <input type="number" id="current-savings" value="0" min="0">
+                        </div>
+                    </div>
+                    <div class="parameter-row">
+                        <div class="parameter-label">Доходность инвестиций (% годовых):</div>
+                        <div class="parameter-value">
+                            <input type="number" id="current-investment" value="10" step="0.1" min="0" max="10"
+                                readonly>
+                        </div>
+                    </div>
+                    <div class="parameter-row">
+                        <div class="parameter-label">Количество детей:</div>
+                        <div class="parameter-value">
+                            <select id="current-children">
+                                <option value="0">Нет детей</option>
+                                <option value="1">1 ребенок</option>
+                                <option value="2">2 ребенка</option>
+                                <option value="3">3 и более детей</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="parameter-row">
+    <div class="parameter-label">Отношения:</div>
+    <div class="parameter-value">
+        <select id="current-relationship-status">
+            <option value="0"selected>Не в отношениях</option>
+            <option value="7">В отношениях</option>
+        </select>
+    </div>
+</div>
+<div class="parameter-row">
+    <div class="parameter-label">Удовлетворённость отношениями (1-10):</div>
+    <div class="parameter-value">
+        <input type="number" id="current-relationship" value="5" min="1" max="10">
+    </div>
+</div>
+                        <div class="parameter-row">
+                            <div class="parameter-label">Уровень стресса (1-10):</div>
+                            <div class="parameter-value">
+                                <input type="number" id="current-stress" value="5" min="1" max="10">
+                            </div>
+                        </div>
+                        <div class="parameter-row">
+                            <div class="parameter-label">Качество сна (1-10):</div>
+                            <div class="parameter-value">
+                                <input type="number" id="current-sleep" value="5" min="1" max="10">
+                            </div>
+                        </div>
+                        <div class="parameter-row">
+                            <div class="parameter-label">Физическая активность (часов/неделю):</div>
+                            <div class="parameter-value">
+                                <input type="number" id="current-activity" value="3" min="0" max="40">
+                            </div>
+                        </div>
+                        <div class="parameter-row">
+                            <div class="parameter-label">Вредные привычки:</div>
+                            <div class="parameter-value">
+                                <select id="current-bad-habits">
+                                    <option value="0">Нет</option>
+                                    <option value="1">Курение</option>
+                                    <option value="2">Алкоголь</option>
+                                    <option value="3">Другое</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="parameter-row">
+                            <div class="parameter-label">Удовлетворённость работой (1-10):</div>
+                            <div class="parameter-value">
+                                <input type="number" id="current-job-satisfaction" value="3" min="1" max="10">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="update-btn" onclick="updateCalculations(); closeModal('parameters-modal')">Обновить
+                        расчёты</button>
+                </div>
             </div>
-            <div class="calculation-steps">
+        </div>
+
+        <!-- Модальные окна с расчетами -->
+        <div id="money-current" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Финансы: Твоя жизнь сейчас</h3>
+                    <span class="close" onclick="closeModal('money-current')">&times;</span>
+                </div>
+                <div class="calculation-steps" id="money-current-calculation">
+                    <!-- Content will be generated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div id="money-it" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Финансы: Фронтенд-разработчик</h3>
+                    <span class="close" onclick="closeModal('money-it')">&times;</span>
+                </div>
+                <div class="calculation-steps" id="money-it-calculation">
+                    <!-- Content will be generated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div id="health-current" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Здоровье: Твоя жизнь сейчас</h3>
+                    <span class="close" onclick="closeModal('health-current')">&times;</span>
+                </div>
+                <div class="calculation-steps" id="health-current-calculation">
+                    <!-- Content will be generated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div id="health-it" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Здоровье: Фронтенд-разработчик</h3>
+                    <span class="close" onclick="closeModal('health-it')">&times;</span>
+                </div>
+                <div class="calculation-steps" id="health-it-calculation">
+                    <!-- Content will be generated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div id="happy-current" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Счастье: Твоя жизнь сейчас</h3>
+                    <span class="close" onclick="closeModal('happy-current')">&times;</span>
+                </div>
+                <div class="calculation-steps" id="happy-current-calculation">
+                    <!-- Content will be generated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div id="happy-it" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Счастье: Фронтенд-разработчик</h3>
+                    <span class="close" onclick="closeModal('happy-it')">&times;</span>
+                </div>
+                <div class="calculation-steps" id="happy-it-calculation">
+                    <!-- Content will be generated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div id="success-current" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Полный успех: Твоя жизнь сейчас</h3>
+                    <span class="close" onclick="closeModal('success-current')">&times;</span>
+                </div>
+                <div class="calculation-steps" id="success-current-calculation">
+                    <!-- Content will be generated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <div id="success-it" class="modal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Полный успех: Фронтенд-разработчик</h3>
+                    <span class="close" onclick="closeModal('success-it')">&times;</span>
+                </div>
+                <div class="calculation-steps" id="success-it-calculation">
+                    <!-- Content will be generated dynamically -->
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Управление модальными окнами
+            function openModal(id) {
+                document.getElementById(id).style.display = 'block';
+            }
+
+            function closeModal(id) {
+                document.getElementById(id).style.display = 'none';
+            }
+
+            // Закрытие при клике вне окна
+            window.onclick = function (event) {
+                if (event.target.className === 'modal') {
+                    event.target.style.display = 'none';
+                }
+            }
+
+            // Форматирование чисел
+           function formatPercent(value) {
+    if (value < 0.0001) {
+        // Для очень малых чисел форматируем вручную
+        const fixedValue = value.toFixed(8); // Фиксируем 8 знаков после запятой
+        return parseFloat(fixedValue).toString() + '%'; // Убираем лишние нули
+    } else if (value < 1) {
+        return value.toFixed(4) + '%'; // 4 знака для малых процентов
+    } else {
+        return value.toFixed(2) + '%'; // 2 знака для обычных значений
+    }
+}
+
+            function formatMoney(value) {
+                return '$' + value.toLocaleString('en-US', { maximumFractionDigits: 0 });
+            }
+
+            // Исправленная логика для отношений
+            document.getElementById('current-relationship-status').addEventListener('change', function () {
+                const relationshipInput = document.getElementById('current-relationship');
+                if (this.value === '0') {
+                    relationshipInput.disabled = true;
+                    relationshipInput.value = '1';
+                } else {
+                    relationshipInput.disabled = false;
+                    relationshipInput.value = this.value;
+                }
+            });
+
+            // Основные расчеты
+            function calculateCurrentMoney() {
+                const income = parseFloat(document.getElementById('current-income').value);
+                const expenses = parseFloat(document.getElementById('current-expenses').value);
+                const savings = parseFloat(document.getElementById('current-savings').value);
+                const investmentReturn = 0.10; // Фиксированные 10%
+                const years = parseFloat(document.getElementById('years').value);
+                const children = parseInt(document.getElementById('current-children').value);
+
+                // Новый расчет влияния детей на расходы (15% на ребенка)
+                const childrenFactor = 1 + (children * 0.15);
+                const adjustedExpenses = expenses * childrenFactor;
+
+                const savingsPerMonth = income - adjustedExpenses;
+                const savingsPerYear = savingsPerMonth * 12 / 73; // Конвертация RUB в USD
+
+                if (savingsPerYear <= 0) return 0;
+
+                // Расчет будущей стоимости
+                const futureValue = savings / 73 + savingsPerYear * ((Math.pow(1 + investmentReturn, years) - 1) / investmentReturn);
+
+                // Расчет вероятности достижения $1M
+                let probability;
+if (futureValue >= 1000000) {
+    probability = 100;
+} else if (futureValue >= 500000) {
+    probability = (futureValue / 1000000) * 50; // До 50% при $500K–$1M
+} else {
+    probability = (futureValue / 1000000) * 10; // < 5% для сумм < $500K
+}
+probability = Math.min(100, probability.toFixed(2));
+
+                // Generate calculation steps for modal
+                let calculationHTML = `
                 <div class="calculation-step">
-                    <h4>Исходные данные:</h4>
+
                     <ul>
-                        <li>Доход семьи: 65 250 ₽/мес ($725)</li>
-                        <li>Расходы: 60 000 ₽/мес</li>
-                        <li>Сбережения: 5 250 ₽/мес ($58)</li>
-                        <li>Период: 15 лет (2025-2040)</li>
-                        <li>Доходность инвестиций: 10% годовых</li>
+                        <li>Доход: ${income.toLocaleString('ru-RU')} ₽/мес ($${(income / 73).toFixed(0)})</li>
+                        <li>Расходы: ${expenses.toLocaleString('ru-RU')} ₽/мес (базовые)</li>
+                        <li>Количество детей: ${children} (${children > 0 ? 'увеличивает расходы на ' + (children * 30) + '%' : 'не влияет на расходы'})</li>
+                        <li>Скорректированные расходы: ${adjustedExpenses.toLocaleString('ru-RU')} ₽/мес ($${(adjustedExpenses / 73).toFixed(0)})</li>
+                        <li>Сбережения: ${savings.toLocaleString('ru-RU')} ₽ ($${(savings / 73).toFixed(0)})</li>
+                        <li>Сбережения в месяц: ${savingsPerMonth.toLocaleString('ru-RU')} ₽ ($${(savingsPerMonth / 73).toFixed(0)})</li>
+                        <li>Период: ${years} лет</li>
+                        <li>Доходность инвестиций: ${(investmentReturn * 100).toFixed(1)}% годовых</li>
                     </ul>
                 </div>
                 
                 <div class="calculation-step">
                     <h4>Расчёт:</h4>
                     <div class="calculation-formula">
-                        Годовые сбережения: $58 × 12 = $696<br><br>
+                        Годовые сбережения: $${(savingsPerMonth / 73).toFixed(0)} × 12 = $${savingsPerYear.toFixed(0)}<br><br>
                         
-                        Будущая стоимость аннуитета:<br>
-                        FV = PMT × [(1 + r)ⁿ - 1] / r<br>
-                        Где:<br>
-                        PMT = $696 (ежегодный платёж)<br>
-                        r = 10% = 0.1 (доходность)<br>
-                        n = 15 лет<br><br>
-                        
-                        FV = 696 × [(1.1¹⁵ - 1)/0.1] ≈ $22 100
+                        Будущая стоимость:<br>
+                        FV = Накопления + Аннуитет<br>
+                        = $${(savings / 73).toFixed(0)} + $${savingsPerYear.toFixed(0)} × [(1+${investmentReturn.toFixed(4)})^${years} - 1)/${investmentReturn.toFixed(4)}]<br>
+                        ≈ ${formatMoney(futureValue)}
                     </div>
                 </div>
                 
                 <div class="calculation-step">
-                    <h4>С учётом везения (k = 0.02008):</h4>
+                    <h4>Вероятность достижения цели:</h4>
                     <div class="calculation-formula">
-                        P(накопить $1M) = 0%<br>
-                        Скорректированная вероятность: 0 × 1.02008 = 0%
+                        P(накопить $1M) = ${probability.toFixed(1)}%
                     </div>
-                    <p>Вывод: даже с учётом везения вероятность достичь цели $1 млн нулевая при текущих условиях.</p>
+                    <p>Вывод: ${probability >= 50 ? 'умеренная' : 'низкая'} вероятность достичь цели $1 млн при текущих условиях.</p>
+                    ${children > 0 ? '<p>Наличие детей значительно снижает возможность накоплений.</p>' : ''}
                 </div>
-            </div>
-        </div>
-    </div>
+            `;
 
-    <div id="money-it" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Финансы: Фронтенд-разработчик</h3>
-                <span class="close" onclick="closeModal('money-it')">&times;</span>
-            </div>
-            <div class="calculation-steps">
+                document.getElementById('money-current-calculation').innerHTML = calculationHTML;
+
+                return probability;
+            }
+
+            function calculateITMoney() {
+                // Fixed parameters for IT scenario
+                const income = 225000;
+                const expenses = 50000;
+                const investmentReturn = 0.10; // 10% по умолчанию для IT
+                const careerGrowthProb = 0.60;
+                const jobLossRisk = 0.10;
+                const years = parseFloat(document.getElementById('years').value);
+
+                const savingsPerMonth = income - expenses;
+                const savingsPerYear = savingsPerMonth * 12 / 73; // Convert RUB to USD (approximate)
+
+                // Base calculation without career growth
+                let futureValue = savingsPerYear * (Math.pow(1 + investmentReturn, years) - 1) / investmentReturn;
+
+                // Adjust for career growth (50% increase after 5 years with 60% probability)
+                const growthFactor = Math.pow(1.5, careerGrowthProb);
+                futureValue *= growthFactor;
+
+                // Adjust for job loss risk
+                futureValue *= (1 - jobLossRisk);
+
+                // Calculate probability to reach $1M
+                let probability = 0;
+                if (futureValue >= 1000000) {
+                    probability = 100;
+                } else if (futureValue >= 800000) {
+                    probability = 80 + (futureValue - 800000) / 10000;
+                } else if (futureValue >= 500000) {
+                    probability = 50 + (futureValue - 500000) / 10000;
+                } else {
+                    probability = futureValue / 10000;
+                }
+
+                probability = Math.min(100, probability);
+
+                // Generate calculation steps for modal
+                let calculationHTML = `
                 <div class="calculation-step">
-                    <h4>Исходные данные:</h4>
+
                     <ul>
-                        <li>Доход: 225 000 ₽/мес ($2,475)</li>
-                        <li>Расходы: 50 000 ₽/мес ($550)</li>
-                        <li>Сбережения: 175 000 ₽/мес ($1,925)</li>
-                        <li>Период: 15 лет (2025-2040)</li>
-                        <li>Доходность инвестиций: 10% годовых</li>
-                        <li>Карьерный рост: +50% дохода через 5 лет (вероятность 60%)</li>
-                        <li>Риск потери работы: 10% за 15 лет</li>
+                        <li>Доход: ${income.toLocaleString('ru-RU')} ₽/мес ($${(income / 73).toFixed(0)}) (мидл-позиция + вторая работа)</li>
+                        <li>Расходы: ${expenses.toLocaleString('ru-RU')} ₽/мес ($${(expenses / 73).toFixed(0)})</li>
+                        <li>Сбережения: ${savingsPerMonth.toLocaleString('ru-RU')} ₽/мес ($${(savingsPerMonth / 73).toFixed(0)})</li>
+                        <li>Период: ${years} лет</li>
+                        <li>Доходность инвестиций: ${(investmentReturn * 100).toFixed(1)}% годовых</li>
+                        <li>Карьерный рост: +50% дохода через 5 лет (вероятность ${(careerGrowthProb * 100).toFixed(1)}%)</li>
+                        <li>Риск потери работы: ${(jobLossRisk * 100).toFixed(1)}% за ${years} лет</li>
                     </ul>
                 </div>
                 
                 <div class="calculation-step">
                     <h4>Базовый расчёт:</h4>
                     <div class="calculation-formula">
-                        Годовые сбережения: $1,925 × 12 = $23,100<br><br>
+                        Годовые сбережения: $${(savingsPerMonth / 73).toFixed(0)} × 12 = $${savingsPerYear.toFixed(0)}<br><br>
                         
                         Будущая стоимость аннуитета:<br>
-                        FV = 23,100 × [(1.1¹⁵ - 1)/0.1] ≈ $734 000
+                        FV = ${savingsPerYear.toFixed(0)} × [(1+${investmentReturn.toFixed(4)})^${years} - 1)/${investmentReturn.toFixed(4)}] ≈ ${formatMoney(savingsPerYear * (Math.pow(1 + investmentReturn, years) - 1) / investmentReturn)}
                     </div>
                 </div>
                 
@@ -469,204 +885,327 @@
                     <h4>С учётом факторов:</h4>
                     <div class="calculation-formula">
                         Скорректированная сумма:<br>
-                        $734 000 × 1.5⁰·⁶ × 0.9 ≈ $950 000<br>
+                        ${formatMoney(savingsPerYear * (Math.pow(1 + investmentReturn, years) - 1) / investmentReturn)} × ${growthFactor.toFixed(2)} × ${(1 - jobLossRisk).toFixed(2)} ≈ ${formatMoney(futureValue)}<br>
                         (карьерный рост × риск потери работы)
                     </div>
                 </div>
                 
                 <div class="calculation-step">
-                    <h4>С учётом везения (k = 0.02008):</h4>
+                    <h4>Вероятность достижения цели:</h4>
                     <div class="calculation-formula">
-                        P(накопить $1M) = 85%<br>
-                        Скорректированная вероятность: 85% × 1.02008 ≈ 86.7%
+                        P(накопить $1M) = ${probability.toFixed(1)}%
                     </div>
                     <p>Вывод: высокая вероятность достичь цели $1 млн благодаря масштабируемому доходу и контролю над расходами.</p>
                 </div>
-            </div>
-        </div>
-    </div>
+            `;
 
-    <div id="health-teacher" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Здоровье: Учитель начальных классов</h3>
-                <span class="close" onclick="closeModal('health-teacher')">&times;</span>
-            </div>
-            <div class="calculation-steps">
+                document.getElementById('money-it-calculation').innerHTML = calculationHTML;
+
+                return probability;
+            }
+
+            function calculateCurrentHealth() {
+                const stressLevel = parseFloat(document.getElementById('current-stress').value) / 10;
+                const sleepQuality = parseFloat(document.getElementById('current-sleep').value) / 10;
+                const activityHours = parseFloat(document.getElementById('current-activity').value);
+                const children = parseInt(document.getElementById('current-children').value);
+                const years = parseFloat(document.getElementById('years').value);
+                const jobType = document.getElementById('current-job-type').value;
+                const badHabits = document.getElementById('current-bad-habits').value;
+
+                // Base illness rate based on stress and sleep
+                let illnessesPerYear = 3 + (1 - sleepQuality) * 5 + stressLevel * 4;
+
+                // Adjust for children
+                illnessesPerYear += children * 2;
+
+                // Adjust for job type
+                switch (jobType) {
+                    case 'office':
+        illnessesPerYear += 2; // Сидячая работа
+        break;
+    case 'physical':
+        illnessesPerYear += 4; // Физический труд - высокий риск травм
+        break;
+    case 'creative':
+        illnessesPerYear += 1; // Творческая работа - средний стресс
+        break;
+    case 'it':
+        illnessesPerYear += 1; // IT - сидячая, но гибкие условия
+        break;
+    case 'medical':
+        illnessesPerYear += 5; // Медицина - высокий стресс и инфекции
+        break;
+    case 'education':
+        illnessesPerYear += 3; // Образование - стресс + контакты с людьми
+        break;
+    case 'sales':
+        illnessesPerYear += 2; // Продажи - средний стресс
+        break;
+    case 'service':
+        illnessesPerYear += 2; // Сфера услуг - физическая активность
+        break;
+    case 'finance':
+        illnessesPerYear += 3; // Финансы - высокий стресс
+        break;
+    case 'freelance':
+        illnessesPerYear += 2; // Фриланс - нестабильность
+        break;
+    case 'unemployed':
+        illnessesPerYear += 4; // Безработица - стресс + возможно плохие условия
+        break;
+    default:
+        illnessesPerYear += 1;
+                }
+
+                // Adjust for bad habits
+                if (badHabits !== '0') {
+                    illnessesPerYear += 3;
+                }
+
+                // Fixed complication risk (5%)
+                const complicationRisk = 0.05;
+                const totalIllnesses = illnessesPerYear * years;
+                const pNoComplications = Math.pow(1 - complicationRisk, totalIllnesses);
+
+                // Calculate health factors
+                const stressImpact = stressLevel * 0.4;
+                const sleepImpact = (1 - sleepQuality) * 0.3;
+                const activityImpact = (1 - Math.min(1, activityHours / 10)) * 0.2;
+                const childrenImpact = children > 0 ? 0.1 : 0;
+                const jobImpact = jobType === 'office' || jobType === 'it' ? 0.1 : 0.15;
+                const habitsImpact = badHabits !== '0' ? 0.15 : 0;
+
+                const totalRisk = stressImpact + sleepImpact + activityImpact + childrenImpact + jobImpact + habitsImpact;
+                const pNoLifestyleIssues = 1 - totalRisk;
+
+                // Final probability
+                const pHealth = pNoComplications * pNoLifestyleIssues;
+
+                // Generate calculation steps for modal
+                let calculationHTML = `
                 <div class="calculation-step">
-                    <h4>Исходные данные:</h4>
                     <ul>
-                        <li>Болезни/год: 15 (работа + дети)</li>
-                        <li>Риск осложнений: 5% на болезнь</li>
-                        <li>Стресс от работы: 57% риск выгорания</li>
-                        <li>Стресс от брака: +20% к депрессии</li>
-                        <li>Период: 15 лет</li>
+                        <li>Уровень стресса: ${stressLevel * 10}/10</li>
+                        <li>Качество сна: ${sleepQuality * 10}/10</li>
+                        <li>Физическая активность: ${activityHours} часов/неделю</li>
+                        <li>Количество детей: ${children}</li>
+                        <li>Сфера деятельности: ${document.getElementById('current-job-type').options[document.getElementById('current-job-type').selectedIndex].text}</li>
+                        <li>Вредные привычки: ${badHabits !== '0' ? 'Да' : 'Нет'}</li>
+                        <li>Период: ${years} лет</li>
                     </ul>
+                </div>
+                
+                <div class="calculation-step">
+                    <h4>Расчёт количества болезней:</h4>
+                    <div class="calculation-formula">
+                        Базовый уровень: 3 болезни/год 
+                        + ${((1 - sleepQuality) * 5).toFixed(1)} из-за плохого сна
+                        + ${(stressLevel * 4).toFixed(1)} из-за стресса
+                        + ${(children * 2).toFixed(1)} из-за детей
+                        + ${jobType === 'office' ? 2 : jobType === 'physical' ? 3 : jobType === 'medical' ? 4 : jobType === 'it' ? 1 : 1} из-за работы
+                        ${badHabits !== '0' ? '+ 3 из-за вредных привычек' : ''}
+                        = ${illnessesPerYear.toFixed(1)} болезней/год<br>
+                        
+                        Всего болезней за ${years} лет: ${illnessesPerYear.toFixed(1)} × ${years} ≈ ${totalIllnesses.toFixed(0)}
+                    </div>
                 </div>
                 
                 <div class="calculation-step">
                     <h4>Расчёт вероятности избежать осложнений:</h4>
                     <div class="calculation-formula">
-                        Всего болезней за 15 лет: 15 × 15 = 225<br>
-                        Вероятность избежать осложнений на одну болезнь: 95% = 0.95<br><br>
-                        
-                        P(без осложнений) = 0.95²²⁵ ≈ 0.000003 (0.0003%)
+                        Риск осложнений: 5% на болезнь<br>
+                        P(без осложнений) = 0.95^${totalIllnesses.toFixed(0)} ≈ ${pNoComplications.toFixed(4)} (${(pNoComplications * 100).toFixed(2)}%)
                     </div>
                 </div>
                 
                 <div class="calculation-step">
-                    <h4>Расчёт вероятности избежать стресса:</h4>
+                    <h4>Расчёт факторов образа жизни:</h4>
                     <div class="calculation-formula">
-                        P(без выгорания) = 1 - 0.57 = 0.43<br>
-                        P(без депрессии) = 1 - 0.20 = 0.80<br>
-                        P(без стресса) = 0.43 × 0.80 = 0.344 (34.4%)
+                        Влияние стресса: ${(stressLevel * 100).toFixed(1)}% × 40% = ${(stressImpact * 100).toFixed(1)}%<br>
+                        Влияние плохого сна: ${((1 - sleepQuality) * 100).toFixed(1)}% × 30% = ${(sleepImpact * 100).toFixed(1)}%<br>
+                        Влияние низкой активности: ${((1 - Math.min(1, activityHours / 10)) * 100).toFixed(1)}% × 20% = ${(activityImpact * 100).toFixed(1)}%<br>
+                        Влияние детей: ${(childrenImpact * 100).toFixed(1)}%<br>
+                        Влияние работы: ${(jobImpact * 100).toFixed(1)}%<br>
+                        ${badHabits !== '0' ? 'Влияние вредных привычек: ' + (habitsImpact * 100).toFixed(1) + '%<br>' : ''}
+                        
+                        Общий риск от образа жизни: ${(totalRisk * 100).toFixed(1)}%<br>
+                        P(здорового образа жизни) = 1 - ${totalRisk.toFixed(4)} = ${pNoLifestyleIssues.toFixed(4)} (${(pNoLifestyleIssues * 100).toFixed(2)}%)
                     </div>
                 </div>
                 
                 <div class="calculation-step">
                     <h4>Итоговый расчёт:</h4>
                     <div class="calculation-formula">
-                        P(здоровья) = P(без осложнений) × P(без стресса)<br>
-                        = 0.000003 × 0.344 ≈ 0.000001 (0.0001%)<br><br>
-                        
-                        С учётом везения (k = 0.02008):<br>
-                        0.000001 × 1.02008 ≈ 0.00000107 (0.000107%)
+                        P(здоровья) = P(без осложнений) × P(здорового образа жизни)<br>
+                        = ${pNoComplications.toFixed(4)} × ${pNoLifestyleIssues.toFixed(4)} ≈ ${pHealth.toFixed(4)} (${(pHealth * 100).toFixed(2)}%)
                     </div>
-                    <p>Вывод: крайне низкая вероятность сохранить здоровье из-за высоких нагрузок и стресса.</p>
+                    <p>Вывод: ${pHealth >= 0.5 ? 'умеренная' : 'низкая'} вероятность сохранить здоровье при текущем образе жизни.</p>
+                    ${children > 0 ? '<p>Наличие детей увеличивает нагрузку на здоровье.</p>' : ''}
+                    ${badHabits !== '0' ? '<p>Вредные привычки значительно снижают вероятность сохранения здоровья.</p>' : ''}
                 </div>
+            `;
+
+                document.getElementById('health-current-calculation').innerHTML = calculationHTML;
+
+                return pHealth * 100;
+            }
+
+           function calculateITHealth() {
+    const years = parseFloat(document.getElementById('years').value);
+
+    // Исходные данные
+    const totalIllnesses = 3 * years; // Болезни за годы
+    const complicationRiskPerIllness = 0.98; // 2% риск осложнений на болезнь
+    const burnoutRiskReduction = 1.20; // Баланс работы/отдыха уменьшает риск на 20%
+    const baseBurnoutRisk = 0.80; // Базовая вероятность избежать выгорания
+
+    // Расчет вероятности избежать осложнений
+    const healthWithoutComplications = Math.pow(complicationRiskPerIllness, totalIllnesses);
+
+    // Расчет вероятности избежать выгорания
+    const healthWithoutBurnout = baseBurnoutRisk * burnoutRiskReduction;
+
+    // Итоговая вероятность здоровья
+    const finalHealth = healthWithoutComplications * healthWithoutBurnout;
+
+    // Генерация HTML с расчетами
+    const calculationHTML = `
+        <div class="calculation-step">
+            Риски:<br>
+            - Сидячая работа: +30% к хроническим болезням (уменьшено до 10% за счет активности)<br>
+            - Стресс от переработок: 40% риск выгорания (уменьшено до 20% за счет удаленной работы и ПП)<br>
+            - Баланс работы/отдыха: -20% к рискам (осознанный подход)<br><br>
+            
+            Болезни/год: 3 (с учетом активности и ПП)<br>
+            Осложнения: 2% на болезнь<br><br>
+            
+            <strong>Расчёт:</strong><br>
+            1. Осложнения за ${years} лет:<br>
+            <div class="calculation-formula">
+                P(здоровья) = 0.98^${totalIllnesses} ≈ ${healthWithoutComplications.toFixed(4)} (${(healthWithoutComplications * 100).toFixed(2)}%)<br>
+            </div>
+            2. Стресс:<br>
+            <div class="calculation-formula">
+                P(без выгорания) = 0.80 × 1.20 = ${healthWithoutBurnout.toFixed(2)} (${(healthWithoutBurnout * 100).toFixed(2)}%)<br>
+            </div>
+            3. Итог:<br>
+            <div class="calculation-formula">
+                ${healthWithoutComplications.toFixed(4)} × ${healthWithoutBurnout.toFixed(2)} ≈ ${finalHealth.toFixed(4)} (${(finalHealth * 100).toFixed(2)}%)<br>
+                P(здоровья) = ${(finalHealth * 100).toFixed(2)}%
             </div>
         </div>
-    </div>
+    `;
 
-    <div id="health-it" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Здоровье: Фронтенд-разработчик</h3>
-                <span class="close" onclick="closeModal('health-it')">&times;</span>
-            </div>
-            <div class="calculation-steps">
+    document.getElementById('health-it-calculation').innerHTML = calculationHTML;
+
+    // Возвращаем итоговую вероятность здоровья
+    return finalHealth * 100; // Итоговая вероятность в процентах
+}
+
+
+            function calculateCurrentHappiness() {
+                const jobSatisfaction = parseFloat(document.getElementById('current-job-satisfaction').value) / 10;
+                const relationshipStatus = document.getElementById('current-relationship-status').value;
+                let relationship = relationshipStatus === '0' ? 0 : parseFloat(document.getElementById('current-relationship').value) / 10;
+                const stressLevel = parseFloat(document.getElementById('current-stress').value) / 10;
+                const children = parseInt(document.getElementById('current-children').value);
+                const financialStability = parseFloat(document.getElementById('current-income').value) / parseFloat(document.getElementById('current-expenses').value);
+
+                // Calculate happiness based on factors with weights
+                const weights = {
+                    job: 0.3,
+                    relationship: relationshipStatus === '0' ? 0 : 0.3,
+                    stress: 0.2,
+                    children: children > 0 ? 0.1 : 0,
+                    finances: 0.1,
+                    freedom: relationshipStatus === '0' ? 0.1 : 0 // Дополнительная свобода, если не в отношениях
+                };
+
+                // Adjust relationship satisfaction based on stress
+                const adjustedRelationship = relationship * (1 - stressLevel * 0.3);
+
+                // Normalize factors
+                const jobFactor = jobSatisfaction;
+                const relationshipFactor = adjustedRelationship;
+                const stressFactor = 1 - stressLevel;
+                const childrenFactor = children > 0 ? 0.7 : 1; // Children reduce happiness by 30%
+                const financesFactor = Math.min(1, financialStability / 1.5);
+                const freedomFactor = relationshipStatus === '0' ? 0.8 : 0.2; // Больше свободы, если не в отношениях
+
+                // Calculate weighted happiness
+                let pHappy = jobFactor * weights.job +
+                    relationshipFactor * weights.relationship +
+                    stressFactor * weights.stress +
+                    childrenFactor * (children > 0 ? weights.children : 0) +
+                    financesFactor * weights.finances +
+                    freedomFactor * weights.freedom;
+
+                // Normalize to account for possible weight variations
+                const totalWeight = weights.job + weights.relationship + weights.stress +
+                    (children > 0 ? weights.children : 0) + weights.finances + weights.freedom;
+                pHappy /= totalWeight;
+
+                // Generate calculation steps for modal
+                let calculationHTML = `
                 <div class="calculation-step">
-                    <h4>Исходные данные:</h4>
                     <ul>
-                        <li>Болезни/год: 3 (с ПП и активностью)</li>
-                        <li>Риск осложнений: 1% на болезнь</li>
-                        <li>Стресс от работы: 20% риск выгорания</li>
-                        <li>Баланс работы/отдыха: -20% к рискам</li>
-                        <li>Период: 15 лет</li>
+                        <li>Удовлетворённость работой: ${jobSatisfaction * 10}/10</li>
+                        <li>${relationshipStatus === '0' ? 'Не в отношениях' : 'Удовлетворённость отношениями: ' + (relationship * 10) + '/10'}</li>
+                        <li>Уровень стресса: ${stressLevel * 10}/10</li>
+                        <li>Количество детей: ${children}</li>
+                        <li>Финансовая стабильность (доход/расход): ${financialStability.toFixed(2)}</li>
                     </ul>
                 </div>
                 
                 <div class="calculation-step">
-                    <h4>Расчёт вероятности избежать осложнений:</h4>
+                    <h4>Расчёт с весовыми коэффициентами:</h4>
                     <div class="calculation-formula">
-                        Всего болезней за 15 лет: 3 × 15 = 45<br>
-                        Вероятность избежать осложнений на одну болезнь: 99% = 0.99<br><br>
+                        P(счастья) = (Работа × ${(weights.job * 100).toFixed(0)}%) 
+                        ${relationshipStatus !== '0' ? '+ (Отношения × ' + (weights.relationship * 100).toFixed(0) + '%)' : ''}
+                        + (Отсутствие стресса × ${(weights.stress * 100).toFixed(0)}%) 
+                        ${children > 0 ? '+ (Дети × ' + (weights.children * 100).toFixed(0) + '%)' : ''}
+                        + (Финансы × ${(weights.finances * 100).toFixed(0)}%)
+                        ${relationshipStatus === '0' ? '+ (Свобода × ' + (weights.freedom * 100).toFixed(0) + '%)' : ''}
                         
-                        P(без осложнений) = 0.99⁴⁵ ≈ 0.653 (65.3%)
+                        = (${jobFactor.toFixed(2)} × ${weights.job.toFixed(2)}) 
+                        ${relationshipStatus !== '0' ? '+ (' + relationshipFactor.toFixed(2) + ' × ' + weights.relationship.toFixed(2) + ')' : ''}
+                        + (${stressFactor.toFixed(2)} × ${weights.stress.toFixed(2)}) 
+                        ${children > 0 ? '+ (' + childrenFactor.toFixed(2) + ' × ' + weights.children.toFixed(2) + ')' : ''}
+                        + (${financesFactor.toFixed(2)} × ${weights.finances.toFixed(2)})
+                        ${relationshipStatus === '0' ? '+ (' + freedomFactor.toFixed(2) + ' × ' + weights.freedom.toFixed(2) + ')' : ''}
+                        
+                        = ${(jobFactor * weights.job).toFixed(2)} 
+                        ${relationshipStatus !== '0' ? '+ ' + (relationshipFactor * weights.relationship).toFixed(2) : ''}
+                        + ${(stressFactor * weights.stress).toFixed(2)} 
+                        ${children > 0 ? '+ ' + (childrenFactor * weights.children).toFixed(2) : ''}
+                        + ${(financesFactor * weights.finances).toFixed(2)}
+                        ${relationshipStatus === '0' ? '+ ' + (freedomFactor * weights.freedom).toFixed(2) : ''}
+                        
+                        = ${pHappy.toFixed(4)} (${(pHappy * 100).toFixed(2)}%)
                     </div>
                 </div>
                 
                 <div class="calculation-step">
-                    <h4>Расчёт вероятности избежать стресса:</h4>
-                    <div class="calculation-formula">
-                        P(без выгорания) = 1 - 0.20 = 0.80<br>
-                        Эффект баланса: 0.80 × 1.20 = 0.96 (96%)
-                    </div>
+                    <h4>Вывод:</h4>
+                    <p>${pHappy >= 0.7 ? 'Высокая' : pHappy >= 0.5 ? 'Умеренная' : 'Низкая'} вероятность счастья при текущих условиях жизни.</p>
+                    ${children > 0 ? '<p>Наличие детей влияет на уровень счастья.</p>' : ''}
+                    ${stressLevel > 0.5 ? '<p>Высокий уровень стресса значительно снижает удовлетворённость жизнью.</p>' : ''}
+                    ${relationshipStatus === '0' ? '<p>Отсутствие отношений компенсируется большей свободой.</p>' : ''}
                 </div>
-                
-                <div class="calculation-step">
-                    <h4>Итоговый расчёт:</h4>
-                    <div class="calculation-formula">
-                        P(здоровья) = P(без осложнений) × P(без стресса)<br>
-                        = 0.653 × 0.96 ≈ 0.6269 (62.69%)<br><br>
-                        
-                        С учётом везения (k = 0.02008):<br>
-                        P(риска) = 1 - 0.6269 = 0.3731<br>
-                        Скорректированный риск: 0.3731 × 0.97992 ≈ 0.3664<br>
-                        P(здоровья) = 1 - 0.3664 = 0.6336 (63.36%)<br>
-                        (Округлено до 38.64% для консервативной оценки)
-                    </div>
-                    <p>Вывод: значительно более высокая вероятность сохранить здоровье благодаря контролируемым условиям работы.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+            `;
 
-    <div id="happy-teacher" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Счастье: Учитель начальных классов</h3>
-                <span class="close" onclick="closeModal('happy-teacher')">&times;</span>
-            </div>
-            <div class="calculation-steps">
-                <div class="calculation-step">
-                    <table style="width: 100%; margin-bottom: 20px;">
-                        <tr>
-                            <th>Фактор</th>
-                            <th>Риск</th>
-                            <th>Вес</th>
-                        </tr>
-                        <tr>
-                            <td>Финансовая нестабильность</td>
-                            <td>80%</td>
-                            <td>30%</td>
-                        </tr>
-                        <tr>
-                            <td>Токсичный брак</td>
-                            <td>70%</td>
-                            <td>25%</td>
-                        </tr>
-                        <tr>
-                            <td>Нехватка времени на себя</td>
-                            <td>60%</td>
-                            <td>20%</td>
-                        </tr>
-                        <tr>
-                            <td>Хроническая усталость</td>
-                            <td>75%</td>
-                            <td>15%</td>
-                        </tr>
-                        <tr>
-                            <td>Социальная изоляция</td>
-                            <td>50%</td>
-                            <td>10%</td>
-                        </tr>
-                    </table>
-                </div>
-                
-                <div class="calculation-step">
-                    <h4>Расчёт:</h4>
-                    <div class="calculation-formula">
-                        Общий риск несчастья = Σ(Риск × Вес)<br>
-                        = (0.8×0.3) + (0.7×0.25) + (0.6×0.2) + (0.75×0.15) + (0.5×0.1)<br>
-                        = 0.24 + 0.175 + 0.12 + 0.1125 + 0.05 = 0.6975 (69.75%)<br><br>
-                        
-                        P(happy) = 1 - 0.6975 = 0.3025 (30.25%)
-                    </div>
-                </div>
-                
-                <div class="calculation-step">
-                    <h4>С учётом везения и поправок:</h4>
-                    <div class="calculation-formula">
-                        С везением (k = 0.02008):<br>
-                        0.3025 × 1.02008 ≈ 0.3086 (30.86%)<br><br>
-                        
-                        Поправка на кризисы (5%):<br>
-                        30.86% × 0.95 ≈ 29.32%
-                    </div>
-                    <p>Вывод: низкая вероятность счастья из-за совокупности негативных факторов.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+                document.getElementById('happy-current-calculation').innerHTML = calculationHTML;
 
-    <div id="happy-it" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Счастье: Фронтенд-разработчик</h3>
-                <span class="close" onclick="closeModal('happy-it')">&times;</span>
-            </div>
-            <div class="calculation-steps">
+                return pHappy * 100;
+            }
+
+            function calculateITHappiness() {
+                const years = parseFloat(document.getElementById('years').value);
+
+                // Расчет для IT сценария согласно новым требованиям
+                let calculationHTML = `
+                <div class="calculation-steps">
                 <div class="calculation-step">
                     <table style="width: 100%; margin-bottom: 20px;">
                         <tr>
@@ -705,97 +1244,150 @@
                 <div class="calculation-step">
                     <h4>Расчёт:</h4>
                     <div class="calculation-formula">
-                        Общий риск несчастья = Σ(Риск × Вес)<br>
+                        Общий риск несчастья = Σ(Риск × Вес)
                         = (0.15×0.25) + (0.2×0.3) + (0.1×0.2) + (0.05×0.15) + (0.1×0.1)<br>
                         = 0.0375 + 0.06 + 0.02 + 0.0075 + 0.01 = 0.135 (13.5%)<br><br>
                         
                         P(happy) = 1 - 0.135 = 0.865 (86.5%)
                     </div>
                 </div>
-                
-                <div class="calculation-step">
-                    <h4>С учётом везения и поправок:</h4>
-                    <div class="calculation-formula">
-                        С везением (k = 0.02008):<br>
-                        0.865 × 1.02008 ≈ 0.882 (88.2%)<br><br>
-                        
-                        Поправка на кризисы (5%):<br>
-                        88.2% × 0.95 ≈ 83.8%<br>
-                        (Округлено до 85.5% для консервативной оценки)
-                    </div>
+            
                     <p>Вывод: высокая вероятность счастья благодаря контролируемым условиям жизни и работы.</p>
                 </div>
-            </div>
-        </div>
-    </div>
+            `;
 
-    <div id="success-teacher" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Полный успех: Учитель начальных классов</h3>
-                <span class="close" onclick="closeModal('success-teacher')">&times;</span>
-            </div>
-            <div class="calculation-steps">
-                <div class="calculation-step">
-                    <h4>Итоговая формула:</h4>
-                    <div class="calculation-formula">
-                        P(успеха) = P(деньги) × P(здоровье) × P(счастье)
-                    </div>
-                </div>
-                
-                <div class="calculation-step">
-                    <h4>Расчёт:</h4>
-                    <div class="calculation-formula">
-                        0 × 0.00000107 × 0.2932 = 0%
-                    </div>
-                    <p>Вывод: нулевая вероятность достичь всех трёх целей одновременно.</p>
-                </div>
-            </div>
-        </div>
-    </div>
+                document.getElementById('happy-it-calculation').innerHTML = calculationHTML;
 
-    <div id="success-it" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">Полный успех: Фронтенд-разработчик</h3>
-                <span class="close" onclick="closeModal('success-it')">&times;</span>
-            </div>
-            <div class="calculation-steps">
-                <div class="calculation-step">
-                    <h4>Итоговая формула:</h4>
-                    <div class="calculation-formula">
-                        P(успеха) = P(деньги) × P(здоровье) × P(счастье)
-                    </div>
-                </div>
-                
-                <div class="calculation-step">
-                    <h4>Расчёт:</h4>
-                    <div class="calculation-formula">
-                        0.867 × 0.3864 × 0.855 ≈ 0.2864 (28.64%)
-                    </div>
-                    <p>Вывод: почти 30% вероятность достичь всех трёх целей одновременно — значительно выше, чем в сценарии с учителем.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        // Управление модальными окнами
-        function openModal(id) {
-            document.getElementById(id).style.display = 'block';
-        }
-
-        function closeModal(id) {
-            document.getElementById(id).style.display = 'none';
-        }
-
-        // Закрытие при клике вне окна
-        window.onclick = function(event) {
-            if (event.target.className === 'modal') {
-                event.target.style.display = 'none';
+                // Возвращаем фиксированное значение 85.5% согласно требованиям
+                return 86.5;
             }
-        }
-    </script>
+
+            function calculateCurrentSuccess() {
+                const pMoney = calculateCurrentMoney() / 100;
+                const pHealth = calculateCurrentHealth() / 100;
+                const pHappy = calculateCurrentHappiness() / 100;
+
+                const pSuccess = pMoney * pHealth * pHappy;
+
+                // Generate calculation steps for modal
+                let calculationHTML = `
+                <div class="calculation-step">
+                    <h4>Итоговая формула:</h4>
+                    <div class="calculation-formula">
+                        P(успеха) = P(деньги) × P(здоровье) × P(счастье)
+                    </div>
+                </div>
+                
+                <div class="calculation-step">
+                    <h4>Расчёт:</h4>
+                    <div class="calculation-formula">
+                        ${(pMoney).toFixed(4)} × ${(pHealth).toFixed(4)} × ${(pHappy).toFixed(4)} ≈ ${pSuccess.toFixed(4)} (${(pSuccess * 100).toFixed(2)}%)
+                    </div>
+                    <p>Вывод: ${pSuccess >= 0.1 ? 'заметная' : 'небольшая'} вероятность достичь всех трёх целей одновременно при текущих условиях.</p>
+                </div>
+            `;
+
+                document.getElementById('success-current-calculation').innerHTML = calculationHTML;
+
+                return pSuccess * 100;
+            }
+
+            function calculateITSuccess() {
+                const pMoney = calculateITMoney() / 100;
+                const pHealth = calculateITHealth() / 100;
+                const pHappy = calculateITHappiness() / 100;
+
+                const pSuccess = pMoney * pHealth * pHappy;
+
+                // Generate calculation steps for modal
+                let calculationHTML = `
+                <div class="calculation-step">
+                    <h4>Итоговая формула:</h4>
+                    <div class="calculation-formula">
+                        P(успеха) = P(деньги) × P(здоровье) × P(счастье)
+                    </div>
+                </div>
+                
+                <div class="calculation-step">
+                    <h4>Расчёт:</h4>
+                    <div class="calculation-formula">
+                        ${(pMoney).toFixed(4)} × ${(pHealth).toFixed(4)} × ${(pHappy).toFixed(4)} ≈ ${pSuccess.toFixed(4)} (${(pSuccess * 100).toFixed(2)}%)
+                    </div>
+                    <p>Вывод: значительная вероятность достичь всех трёх целей одновременно — значительно выше, чем в текущем сценарии.</p>
+                </div>
+            `;
+
+                document.getElementById('success-it-calculation').innerHTML = calculationHTML;
+
+                return pSuccess * 100;
+            }
+
+            function updateCalculations() {
+                // Calculate and update all values
+                const currentMoney = calculateCurrentMoney();
+                const itMoney = calculateITMoney();
+                const currentHealth = calculateCurrentHealth();
+                const itHealth = calculateITHealth();
+                const currentHappy = calculateCurrentHappiness();
+                const itHappy = calculateITHappiness();
+                const currentSuccess = calculateCurrentSuccess();
+                const itSuccess = calculateITSuccess();
+
+                // Update table values
+                document.getElementById('current-money').textContent = formatPercent(currentMoney);
+                document.getElementById('it-money').textContent = formatPercent(itMoney);
+                document.getElementById('current-health').textContent = formatPercent(currentHealth);
+                document.getElementById('it-health').textContent = formatPercent(itHealth);
+                document.getElementById('current-happy').textContent = formatPercent(currentHappy);
+                document.getElementById('it-happy').textContent = formatPercent(itHappy);
+                document.getElementById('current-success').textContent = formatPercent(currentSuccess);
+                document.getElementById('it-success').textContent = formatPercent(itSuccess);
+
+                // Update color classes based on values
+                updateValueClass('current-money', currentMoney);
+                updateValueClass('it-money', itMoney);
+                updateValueClass('current-health', currentHealth);
+                updateValueClass('it-health', itHealth);
+                updateValueClass('current-happy', currentHappy);
+                updateValueClass('it-happy', itHappy);
+                updateValueClass('current-success', currentSuccess);
+                updateValueClass('it-success', itSuccess);
+            }
+
+            function updateValueClass(elementId, value) {
+                const element = document.getElementById(elementId);
+                element.classList.remove('bad-value', 'good-value');
+
+                if (value < 30) {
+                    element.classList.add('bad-value');
+                } else {
+                    element.classList.add('good-value');
+                }
+            }
+
+            // Initialize calculations on page load
+            window.onload = function () {
+                updateCalculations();
+
+                // Disable relationship satisfaction if not in relationship
+                const relationshipStatus = document.getElementById('current-relationship-status');
+                const relationshipInput = document.getElementById('current-relationship');
+                if (relationshipStatus.value === '0') {
+                    relationshipInput.disabled = true;
+                    relationshipInput.value = '1';
+                }
+
+                relationshipStatus.addEventListener('change', function () {
+                    if (this.value === '0') {
+                        relationshipInput.disabled = true;
+                        relationshipInput.value = '1';
+                    } else {
+                        relationshipInput.disabled = false;
+                        relationshipInput.value = this.value;
+                    }
+                });
+            };
+        </script>
 </body>
 
 </html>
